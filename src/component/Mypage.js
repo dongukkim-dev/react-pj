@@ -2,11 +2,13 @@
 import React, { useState, useEffect } from 'react';
 
 import './MyPage.css'; // Import the CSS file for styling
+import axios from 'axios';
 
 const MyPage = () => {
+  const [users, setUsers] = useState([]);
   const [userInfo, setUserInfo] = useState({
-    username: '사용자 이름',
-    email: 'user@example.com',
+    username: users.name,
+    email: users.email,
     phoneNumber: '010-1234-5678', // 전화번호 추가
     userId: 'user123', // 아이디 추가
     password: '********', // 비밀번호 추가
@@ -20,7 +22,16 @@ const MyPage = () => {
       // 페이지가 홈페이지에서 이동된 경우, 창 크기를 조절하거나 다른 조치를 취할 수 있습니다.
       // 예: window.resizeTo(width, height);
     }
+
+    axios.get('/api/members')
+    .then(response => setUsers(response.data.data[0]))
+    .then(response => console.log(response.data.data[0]))
+    .catch(error => console.log(error))
   }, []);
+
+  if (!users) {
+    return null;
+  }
 
   const handleUpdate = async (newUserInfo) => {
     try {
@@ -52,12 +63,12 @@ const MyPage = () => {
   return (
     <div className="my-page-container">
       <h2>마이페이지</h2>
-      <p>사용자 이름: {userInfo.username}</p>
-      <p>Email: {userInfo.email}</p>
+      <p>사용자 이름: {users.name}</p>
+      <p>Email: {users.email}</p>
       <p>전화번호: {userInfo.phoneNumber}</p>
       <p>아이디: {userInfo.userId}</p>
       <p>비밀번호: {userInfo.password}</p>
-      <p>성별: {userInfo.gender}</p>
+      <p>성별: {users.gender}</p>
       {/* Additional user information fields can be added here */}
       <button onClick={() => handleUpdate({ ...userInfo, username: '새로운 이름' })}>
         회원정보 수정

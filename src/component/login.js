@@ -1,16 +1,33 @@
 // Login.js
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './login.css'; 
+import axios from 'axios';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     // 로그인 로직 구현: 서버로 아이디와 비밀번호 전송 등
     console.log('로그인 시도:', { username, password });
+    alert('로그인 시도');
+
+    axios.post("/api/login", {
+      email: username,
+      password: password
+    })
+    .then(res => {
+      console.log("200", res.data);
+
+      if (res.status === 200) {
+        navigate('/');
+      }
+    })
+    .catch(error => console.log(error))
   };
 
   const handleSocialLogin = (provider) => {
