@@ -1,6 +1,8 @@
 // signup.js
 
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [newUsername, setNewUsername] = useState('');
@@ -8,11 +10,26 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
+  const navigate = useNavigate();
 
   const handleSignup = () => {
     // 회원가입 로직을 구현합니다. 서버로 새로운 유저 정보를 전송하거나,
     // 로컬 상태를 업데이트하는 등의 작업을 수행할 수 있습니다.
     console.log('회원가입 시도:', { newUsername, newPassword, email, phoneNumber, address });
+
+    axios.post("/api/users", {
+      name: newUsername,
+      password: newPassword,
+      email: email
+    })
+    .then(res => {
+      console.log("200", res.data);
+
+      if (res.status === 200 || res.status === 201) {
+        navigate('/');
+      }
+    })
+    .catch(error => console.log(error))
   };
 
   const handleDuplicateCheck = () => {
