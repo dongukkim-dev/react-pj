@@ -1,8 +1,10 @@
 // Navbar.js
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
-const Navbar = ({ handleSearchChange, isLoggedIn, handleLogout }) => {
+const Navbar = ({ handleSearchChange }) => {
+  const { isLoggedIn, handleLogout } = useAuth();
   const location = useLocation();
 
   // 특정 페이지에서는 렌더링하지 않음
@@ -26,7 +28,7 @@ const Navbar = ({ handleSearchChange, isLoggedIn, handleLogout }) => {
         <Link to="/wishlist" className="nav-link">찜목록</Link>
         <Link to="/cart" className="nav-link">장바구니</Link>
         {isLoggedIn ? (
-          <button className="nav-link" onClick={handleLogout}>로그아웃</button>
+          <Link to="/login" className="nav-link" onClick={handleLogout}>로그아웃</Link>
         ) : (
           <Link to="/login" className="nav-link">로그인</Link>
         )}

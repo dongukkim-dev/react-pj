@@ -21,8 +21,9 @@ import './App.css';
 import { AuthProvider, useAuth } from './AuthContext';
 
 const Navigation = ({ handleSearchChange }) => {
-  const { isLoggedIn, handleLogout } = useAuth();
+  const { isLoggedIn, handleLogin, handleLogout } = useAuth();
   const navigate = useNavigate();
+
 };
 
 const Category = ({ name }) => {
@@ -110,40 +111,6 @@ const App = () => {
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     // 검색어에 따라 음식점을 필터링하거나 서버에 검색 요청을 보낼 수 있는 로직
-  };
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-
-    const handleLogin = () => {
-      // 로그인 로직 구현
-      console.log('access_token 값:', localStorage.getItem('access_token'))
-      if (localStorage.getItem('access_token')) {
-        setIsLoggedIn(true);
-      }
-    };
-
-    // 최초 로그인 상태 확인
-    handleLogin();
-
-    // 이후 로그인 상태가 변할 때마다 확인
-    window.addEventListener('storage', () => {
-      handleLogin();
-    });
-
-    return () => {
-      // 컴포넌트가 언마운트될 때 정리(clean-up) 함수
-      window.removeEventListener('storage', () => {
-        handleLogin();
-      });
-    };
-  }, []);
-  
-
-  const handleLogout = () => {
-    // 로그아웃 로직 구현
-    setIsLoggedIn(false);
   };
   
   return (

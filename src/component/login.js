@@ -43,16 +43,6 @@ const Login = () => {
     };
 
     httpRequest('/api/login', user, success_user, success_admin, fail);
-
-    // 여기에서 로그인 성공 여부를 판단하여 페이지 이동
-    // const loginSuccessful = true; // 예시로 성공했다고 가정
-
-    // if (loginSuccessful) {
-    //   navigate('/managermain');
-
-    // } else {
-    //   alert('로그인 실패. 올바른 사용자 이름과 비밀번호를 입력하세요.');
-    // }
   };
   const handleSocialLogin = (provider) => {
     // SNS 로그인 로직 구현
@@ -137,11 +127,12 @@ function httpRequest(url, body, success_user, success_admin, fail) {
     },
   })
   .then(response => {
+    console.log('서버 응답:', response); //테스트 코드
     if (response.status === 200 || response.status === 201) {
         localStorage.setItem('access_token', response.data.token);
         console.log('response 값 출력', response.data.role);
 
-        if (response.data.role == 'ROLE_ADMIN') {
+        if (response.data.role === 'ROLE_ADMIN') {
           return success_admin();
         }
         else {
@@ -150,8 +141,13 @@ function httpRequest(url, body, success_user, success_admin, fail) {
         
     } 
     else {
+        console.log('error res:', response.data);
         return fail();
     }
+  })
+  .catch(function (error) {
+    alert(error.response.data);
+    console.log('서버 에러 코드:', error);
   });
 }
 

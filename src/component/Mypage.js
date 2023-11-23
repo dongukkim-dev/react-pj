@@ -6,10 +6,9 @@ import './MyPage.css'; // Import the CSS file for styling
 
 const MyPage = () => {
   const [userInfo, setUserInfo] = useState({
-    username: '사용자 이름',
     email: 'user@example.com',
+    username: '사용자 이름',
     phoneNumber: '010-1234-5678', // 전화번호 추가
-    password: '********', // 비밀번호 추가
     gender: '남성', // 성별 추가
     // ... Add more user information as needed
   });
@@ -65,11 +64,13 @@ const MyPage = () => {
   return (
     <div className="my-page-container">
       <h2>마이페이지</h2>
-      <p>사용자 이름: {userInfo.name}</p>
       <p>Email: {userInfo.email}</p>
+      <p>사용자 이름: {userInfo.name}</p>
       <p>전화번호: {userInfo.phone}</p>
-      <p>비밀번호: {userInfo.password}</p>
       <p>성별: {userInfo.gender}</p>
+      <p>등급: {userInfo.grade}</p>
+      <p>적립금: {userInfo.point}</p>
+      <p>생성 날짜: {userInfo.createdDate}</p>
       {/* Additional user information fields can be added here */}
       <button onClick={() => handleUpdate({ ...userInfo, username: '새로운 이름' })}>
         회원정보 수정
