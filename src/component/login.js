@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 import './login.css'; 
 import axios from 'axios';
 
 const Login = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
@@ -29,9 +31,11 @@ const Login = () => {
     console.log('로그인 시도:', { email, password });
 
     function success_user() {
+      login();
       navigate('/');
     };
     function success_admin() {
+      login();
       navigate('/managermain');
     }
     function fail() {
@@ -106,6 +110,24 @@ const Login = () => {
     </div>
   );
 };
+
+// 쿠키를 가져오는 함수
+function getCookie(key) {
+  var result = null;
+  var cookie = document.cookie.split(';');
+  cookie.some(function (item) {
+      item = item.replace(' ', '');
+
+      var dic = item.split('=');
+
+      if (key === dic[0]) {
+          result = dic[1];
+          return true;
+      }
+  });
+
+  return result;
+}
 
 function httpRequest(url, body, success_user, success_admin, fail) {
   axios.post(url, body, {

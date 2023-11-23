@@ -1,6 +1,6 @@
 // app.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import MyPage from './component/Mypage';
 import Wishlist from './component/Wishlist';
@@ -18,11 +18,11 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './App.css';
+import { AuthProvider, useAuth } from './AuthContext';
 
-const Navigation = ({ handleSearchChange, isLoggedIn, handleLogout }) => {
+const Navigation = ({ handleSearchChange }) => {
+  const { isLoggedIn, handleLogout } = useAuth();
   const navigate = useNavigate();
-
- 
 };
 
 const Category = ({ name }) => {
@@ -114,13 +114,32 @@ const App = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = () => {
-    // 로그인 로직 구현
-    console.log('access_token 값:', localStorage.getItem('access_token'))
-    if (localStorage.getItem('access_token')) {
-      setIsLoggedIn(true);
-    }
-  };
+  useEffect(() => {
+
+    const handleLogin = () => {
+      // 로그인 로직 구현
+      console.log('access_token 값:', localStorage.getItem('access_token'))
+      if (localStorage.getItem('access_token')) {
+        setIsLoggedIn(true);
+      }
+    };
+
+    // 최초 로그인 상태 확인
+    handleLogin();
+
+    // 이후 로그인 상태가 변할 때마다 확인
+    window.addEventListener('storage', () => {
+      handleLogin();
+    });
+
+    return () => {
+      // 컴포넌트가 언마운트될 때 정리(clean-up) 함수
+      window.removeEventListener('storage', () => {
+        handleLogin();
+      });
+    };
+  }, []);
+  
 
   const handleLogout = () => {
     // 로그아웃 로직 구현
@@ -129,8 +148,9 @@ const App = () => {
   
   return (
     <Router>
+      <AuthProvider>
       {/* Navbar를 모든 페이지에 표시 */}
-      <Navbar handleSearchChange={handleSearchChange} isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+      <Navbar handleSearchChange={handleSearchChange} />
       <Routes>
         {/* 메인페이지 */}
         <Route
@@ -141,9 +161,6 @@ const App = () => {
                 restaurants={restaurants}
                 searchQuery={searchQuery}
                 handleSearchChange={handleSearchChange}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-                isLoggedIn={isLoggedIn}
               />
             </>
           }
@@ -169,6 +186,7 @@ const App = () => {
         <Route path="/add-menu" element={<AddMenu />} />
 
       </Routes>
+      </AuthProvider>
     </Router>
   );
 };

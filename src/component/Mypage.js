@@ -21,8 +21,12 @@ const MyPage = () => {
       // 예: window.resizeTo(width, height);
     }
 
-    axios.get('/api/member', 
-      {params: {email: "test@asd.123"}})
+    axios.get('/api/member', {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    })
     .then(response => {
       setUserInfo(response.data)
       return response;

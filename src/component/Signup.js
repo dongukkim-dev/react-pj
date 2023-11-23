@@ -46,7 +46,7 @@ const Signup = () => {
 
   const handleDuplicateCheck = () => {
     // 중복확인 로직을 구현합니다.
-    console.log('아이디 중복 확인 시도:', newUsername);
+    console.log('이메일 중복 확인 시도:', email);
   };
 
   const handleGenderChange = (selectedGender) => {
