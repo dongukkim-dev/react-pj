@@ -14,15 +14,19 @@ import Navbar from './component/Navbar';
 import ManagerMain from './component/ManagerMain';
 import StoreInfoEdit from './component/StoreInfoEdit';  
 import AddMenu from './component/AddMenu'; 
+import Register from './component/Register';
+import MenuManagement from './component/MenuManagement';
+import MenuDetail from './component/MenuDetail';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './App.css';
 import { AuthProvider, useAuth } from './AuthContext';
+import axios from 'axios';
 
 const Navigation = ({ handleSearchChange }) => {
-  const { isLoggedIn, handleLogin, handleLogout } = useAuth();
-  const navigate = useNavigate();
+  // const { isLoggedIn, handleLogin, handleLogout } = useAuth();
+  // const navigate = useNavigate();
 
 };
 
@@ -77,13 +81,13 @@ const MainPage = ({ restaurants, searchQuery, handleSearchChange, handleLogin, h
           <Category name="디저트" />
         </div>
         <Slider className="main-slider" {...settings}>
-          {restaurants.map((restaurant, index) => (
-            <RestaurantCard key={index} name={restaurant} />
+          {restaurants.map((restaurant) => (
+            <RestaurantCard key={restaurant.name} name={restaurant.name} />
           ))}
         </Slider>
         <div className="restaurants">
-          {restaurants.map((restaurant, index) => (
-            <RestaurantCard key={index} name={restaurant} />
+          {restaurants.map((restaurant) => (
+            <RestaurantCard key={restaurant.name} name={restaurant.name} />
           ))}
         </div>
       </main>
@@ -106,6 +110,18 @@ const App = () => {
 
   useEffect(() => {
     // 서버에서 음식점 목록을 가져오는 API 호출 등의 로직
+    axios.get('/api/stores', {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      setRestaurants(response.data)
+      return response;
+    })
+    .then(response => console.log(response.data))
+    .catch(error => console.log(error))
   }, []);
 
   const handleSearchChange = (e) => {
@@ -151,7 +167,9 @@ const App = () => {
         <Route path="/managermain" element={<ManagerMain />} />
         <Route path="/store-info-edit" element={<StoreInfoEdit />} /> 
         <Route path="/add-menu" element={<AddMenu />} />
-
+        <Route path="/register" element={<Register />} />
+        <Route path="/menu-management" element={<MenuManagement />} />
+        <Route path="/menu-detail" element={<MenuDetail />} />
       </Routes>
       </AuthProvider>
     </Router>

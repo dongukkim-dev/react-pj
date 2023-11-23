@@ -78,11 +78,9 @@ const Login = () => {
         />
       </div>
       <div>
-      {/* <Link to="/managermain"> */}
         <button className="login-button" onClick={handleLogin}>
           로그인
         </button>
-        {/* </Link> */}
       </div>
       <div>
       <Link to="/sns-signup">

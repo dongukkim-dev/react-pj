@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 import './ManagerMain.css';
- 
+
 const ManagerMain = () => {
-  console.log('ManagerMain 컴포넌트 렌더링');
+  const { handleLogout } = useAuth();
 
   const processOrder = (orderId, status) => {
     console.log(`주문 ID ${orderId}를 ${status} 상태로 처리합니다.`);
@@ -19,9 +20,10 @@ const ManagerMain = () => {
         <h1>주문 관리 페이지</h1>
         <div className="header-menu">
           <Link to="/store-info-edit">가게 정보 수정</Link>
-          <Link to="/add-menu" >메뉴 추가</Link>
+          <Link to="/menu-management">메뉴 관리</Link> {/* 메뉴 추가 버튼을 메뉴 관리 버튼으로 변경 */}
           <Link to="/mypage">마이페이지</Link>
           <Link to="/sales">매출 관리</Link>
+          <Link to="/login" className="nav-link" onClick={handleLogout}>로그아웃</Link>
         </div>
       </div>
 

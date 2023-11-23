@@ -10,15 +10,12 @@ const MyPage = () => {
     username: '사용자 이름',
     phoneNumber: '010-1234-5678', // 전화번호 추가
     gender: '남성', // 성별 추가
-    // ... Add more user information as needed
+    points: 1000, 
+    grade: 'gold', 
+    address: '서울특별시 성북구 서경로 123번지',
   });
 
   useEffect(() => {
-    const { fromHomePage } = window.history.state || {};
-    if (fromHomePage) {
-      // 페이지가 홈페이지에서 이동된 경우, 창 크기를 조절하거나 다른 조치를 취할 수 있습니다.
-      // 예: window.resizeTo(width, height);
-    }
 
     axios.get('/api/member', {
       headers: {
@@ -70,6 +67,7 @@ const MyPage = () => {
       <p>성별: {userInfo.gender}</p>
       <p>등급: {userInfo.grade}</p>
       <p>적립금: {userInfo.point}</p>
+      <p>주소: {userInfo.address}</p>
       <p>생성 날짜: {userInfo.createdDate}</p>
       {/* Additional user information fields can be added here */}
       <button onClick={() => handleUpdate({ ...userInfo, username: '새로운 이름' })}>
