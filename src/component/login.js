@@ -34,6 +34,10 @@ const Login = () => {
       login();
       navigate('/');
     };
+    function success_admin_first() {
+      login();
+      navigate('/register');
+    }
     function success_admin() {
       login();
       navigate('/managermain');
@@ -42,7 +46,7 @@ const Login = () => {
       alert('로그인 실패했습니다.');
     };
 
-    httpRequest('/api/login', user, success_user, success_admin, fail);
+    httpRequest('/api/login', user, success_user, success_admin, success_admin_first, fail);
   };
   const handleSocialLogin = (provider) => {
     // SNS 로그인 로직 구현
@@ -117,7 +121,7 @@ function getCookie(key) {
   return result;
 }
 
-function httpRequest(url, body, success_user, success_admin, fail) {
+function httpRequest(url, body, success_user, success_admin, success_admin_first, fail) {
   axios.post(url, body, {
     headers: { // 로컬 스토리지에서 액세스 토큰 값을 가져와 헤더에 추가
       Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -131,7 +135,14 @@ function httpRequest(url, body, success_user, success_admin, fail) {
         console.log('response 값 출력', response.data.role);
 
         if (response.data.role === 'ROLE_ADMIN') {
-          return success_admin();
+          //해당 유저의 음식점이 있으면 true, 없으면 false
+          //get 요청으로 받아와야 하나
+          if (response.data.storeId === 0) {
+            return success_admin_first();
+          }
+          else {
+            return success_admin();  
+          }
         }
         else {
           return success_user();

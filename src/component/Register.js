@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Register.css'; // 필요한 스타일 파일을 import
+import axios from 'axios';
 
 const Register = () => {
   const [restaurantName, setRestaurantName] = useState('');
@@ -13,14 +14,36 @@ const Register = () => {
     // 음식점 등록 로직을 수행합니다.
     console.log('음식점 등록 시도:', { restaurantName, restaurantInfo });
 
-    // 여기에서 음식점 등록 성공 여부를 판단하여 페이지 이동
-    const registerSuccessful = true; // 예시로 성공했다고 가정
+    axios.post("/api/stores", {
+      name: restaurantName,
+      content: restaurantInfo,
+    }, {
+      headers: { // 로컬 스토리지에서 액세스 토큰 값을 가져와 헤더에 추가
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => {
+      console.log("200", res.data);
 
-    if (registerSuccessful) {
-      navigate('/managermain'); // 음식점 등록 성공 시 관리자 페이지로 이동
-    } else {
-      alert('음식점 등록 실패. 모든 필수 정보를 입력하세요.');
-    }
+      if (res.status === 200 || res.status === 201) {
+        alert('음식점 등록에 성공했습니다.');
+        navigate('/managermain');
+      }
+      else {
+        alert('음식점 등록 실패');
+      }
+    })
+    .catch(error => console.log(error))
+
+    // 여기에서 음식점 등록 성공 여부를 판단하여 페이지 이동
+    // const registerSuccessful = true; // 예시로 성공했다고 가정
+
+    // if (registerSuccessful) {
+    //   navigate('/managermain'); // 음식점 등록 성공 시 관리자 페이지로 이동
+    // } else {
+    //   alert('음식점 등록 실패. 모든 필수 정보를 입력하세요.');
+    // }
   };
 
   return (

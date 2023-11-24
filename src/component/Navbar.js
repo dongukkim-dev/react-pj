@@ -16,7 +16,8 @@ const Navbar = ({ handleSearchChange }) => {
     location.pathname === '/store-info-edit' ||
     location.pathname === '/register' ||
     location.pathname === '/menu-management' ||
-    location.pathname === '/sales'
+    location.pathname === '/sales' ||
+    location.pathname === '/menu-detail'
   ) {
     return null;
   }

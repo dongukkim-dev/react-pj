@@ -118,7 +118,6 @@ const App = () => {
     })
     .then(response => {
       setRestaurants(response.data)
-      return response;
     })
     .then(response => console.log(response.data))
     .catch(error => console.log(error))
