@@ -1,5 +1,5 @@
 .wishlist-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   background-color: #fff;
@@ -9,7 +9,7 @@
 }
 
 .wishlist-container h2 {
-  color: #333;
+  color: #4caf50; 
   font-size: 24px;
   margin-bottom: 20px;
 }
@@ -24,7 +24,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px; /* 간격 크게 조절 */
+  margin-bottom: 40px; /* 간격 크게a 조절 */
   background-color: #f8f8f8;
   padding: 40px; /* 높이 크게 조절 */
   border-radius: 8px;

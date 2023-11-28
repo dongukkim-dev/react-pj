@@ -1,71 +1,75 @@
-/* AddMenu.css */
+/* StoreInfoEdit.css */
 
-.add-menu-container {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 100%;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: rgb(10, 173, 5);
-    color: white; /* Header text color */
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-  
-  .add-menu-content {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(247, 244, 244, 0.1);
-  }
-  
-  .add-menu-content p {
-    margin-bottom: 10px;
-  }
-  
-  .add-menu-content input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .add-menu-content button {
-    background-color: #27ae60;
-    color: white; /* Button text color */
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .add-menu-content button:hover {
-    background-color: #218c53;
-  }
-  
-  .go-back-link {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .go-back-link a {
-    text-decoration: none;
-    color: #3498db; /* Link text color */
-    font-weight: bold;
-  }
-  
-  .go-back-link a:hover {
-    color: #217dbb;
-  }
-  
+/* 컨테이너 스타일 */
+.storeinfoedit-container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 100%;
+}
+
+/* 헤더 스타일 */
+.storeinfoedit-container h1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(10, 173, 5);
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* 콘텐츠 스타일 */
+.storeinfoedit-container form {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(247, 244, 244, 0.1);
+}
+
+.storeinfoedit-container form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.storeinfoedit-container form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.storeinfoedit-container form button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.storeinfoedit-container form button:hover {
+  background-color: #218c53;
+}
+
+.go-back-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.go-back-link a {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.go-back-link a:hover {
+  color: #217dbb;
+}

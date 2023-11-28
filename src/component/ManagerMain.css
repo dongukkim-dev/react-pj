@@ -1,47 +1,31 @@
+/* ManagerMain.css */
+
 .managermain-container {
     background-color: #f5f5f5;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 20px auto;
-    max-width: 100%; /* 변경된 부분: 전체 폭을 차지하도록 수정 */
-}
-
-.header {
+    max-width: 800px;
+  }
+  
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px; /* 변경된 부분: 좀 더 여백 추가 */
+    padding: 10px;
     background-color: rgb(10, 173, 5);
     color: white;
     border-radius: 5px;
     margin-bottom: 20px;
-}
-
-.header-menu {
-    display: flex;
-    gap: 10px;
-}
-
-.header-menu a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.header-menu a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.order-list {
+  }
+  
+  .order-list {
     display: grid;
     gap: 20px;
-}
-
-.order-item {
+  }
+  
+  .order-item {
     background-color: #fff;
     padding: 15px;
     border-radius: 8px;
@@ -49,13 +33,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.order-item span {
+  }
+  
+  .order-item span {
     margin-right: 10px;
-}
-
-.order-item button {
+  }
+  
+  .order-item button {
     background-color: #27ae60;
     color: white;
     border: none;
@@ -63,23 +47,23 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.order-item button:hover {
+  }
+  
+  .order-item button:hover {
     background-color: #218c53;
-}
-
-.go-back-link {
+  }
+  
+  .go-back-link {
     margin-top: 20px;
     text-align: center;
-}
-
-.go-back-link a {
+  }
+  
+  .go-back-link a {
     text-decoration: none;
     color: #3498db;
     font-weight: bold;
-}
-
-.go-back-link a:hover {
+  }
+  
+  .go-back-link a:hover {
     color: #217dbb;
-}
+  }

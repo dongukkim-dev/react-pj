@@ -48,6 +48,8 @@ const Login = () => {
 
     httpRequest('/api/login', user, success_user, success_admin, success_admin_first, fail);
   };
+  
+
   const handleSocialLogin = (provider) => {
     // SNS 로그인 로직 구현
     console.log(`SNS ${provider} 계정으로 로그인 시도`);

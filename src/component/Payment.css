@@ -2,7 +2,7 @@
 
 /* Payment 컴포넌트 전체에 대한 스타일 */
 .payment-container {
-    max-width: 800px; /* 크기 조절 */
+    max-width: 1000px; /* 크기 조절 */
     margin: 0 auto;
     padding: 30px; /* 여백 조절 */
     border: 1px solid #ccc;

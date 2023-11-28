@@ -8,16 +8,17 @@ const Navbar = ({ handleSearchChange }) => {
   const location = useLocation();
 
   // 특정 페이지에서는 렌더링하지 않음
-  if (location.pathname === '/managermain' || 
-    location.pathname === '/login' || 
-    location.pathname === '/sns-signup' || 
-    location.pathname === '/signup' || 
-    location.pathname === '/add-menu' || 
-    location.pathname === '/store-info-edit' ||
-    location.pathname === '/register' ||
-    location.pathname === '/menu-management' ||
-    location.pathname === '/sales' ||
-    location.pathname === '/menu-detail'
+  if (
+    location.pathname === '/managermain' ||
+    location.pathname === '/login' ||
+    location.pathname === '/sns-signup' ||
+    location.pathname === '/signup' ||
+    location.pathname === '/add-menu' ||
+    location.pathname === '/store-info-edit'||
+    location.pathname === '/menu-management'||
+    location.pathname === '/menu-detail'||
+    location.pathname === '/sales'||
+    location.pathname === '/register'
   ) {
     return null;
   }
@@ -25,6 +26,7 @@ const Navbar = ({ handleSearchChange }) => {
   return (
     <header>
       <div className="header-left">
+        {/* "배달및 주문서비스"를 클릭 가능한 링크로 만듭니다. */}
         <Link to="/" className="nav-link">
           <h1>배달및 주문서비스</h1>
         </Link>
@@ -37,7 +39,9 @@ const Navbar = ({ handleSearchChange }) => {
         {isLoggedIn ? (
           <Link to="/login" className="nav-link" onClick={handleLogout}>로그아웃</Link>
         ) : (
-          <Link to="/login" className="nav-link">로그인</Link>
+          <Link to="/login" className="nav-link">
+            로그인
+          </Link>
         )}
       </div>
     </header>

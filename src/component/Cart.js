@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Cart.css';
@@ -17,8 +18,9 @@ const CartItem = ({ restaurantName, menuName, quantity, price }) => {
 
 const Cart = () => {
   const cartItems = [
-    { restaurantName: '엽기떡볶이', menuName: '마라엽떡', quantity: 2, price: 16000 },
-    // 추가적인 주문 정보들을 필요에 따라 추가
+    { restaurantName: '엽기떡볶이', menuName: '마라엽떡', quantity: 1, price: 16000 },
+    { restaurantName: '엽기떡볶이', menuName: '주먹김밥', quantity: 1, price: 3000 },
+    { restaurantName: '엽기떡볶이', menuName: '쿨피스', quantity: 1, price: 1000 },
   ];
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
@@ -45,4 +47,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cart;  

@@ -1,49 +1,70 @@
-/* AddMenu.css */
+/* StoreInfoEdit.css */
 
-/* 컨테이너 스타일 */
-.add-menu-container {
-  max-width: 600px;
-  margin: auto;
+/* Container style */
+.storeinfoedit-container {
+  background-color: #f5f5f5;
   padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 100%;
 }
 
-/* 페이지 제목 스타일 */
-.add-menu-container h1 {
+/* Header style */
+.storeinfoedit-container h1 {
   font-size: 24px;
   color: #333;
+  margin-bottom: 20px;
 }
 
-/* 폼 스타일 */
-.add-menu-container form {
-  display: flex;
-  flex-direction: column;
+/* Green box style for content */
+.storeinfoedit-content {
+  padding: 20px;
+  background-color: #27ae60; /* Green color */
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(247, 244, 244, 0.1);
 }
 
-/* 입력란 스타일 */
-.add-menu-container div {
-  margin-bottom: 15px;
-}
-
-.add-menu-container label {
+.storeinfoedit-content label {
   font-size: 16px;
   margin-bottom: 8px;
+  color: white; /* White text */
 }
 
-.add-menu-container input {
-  padding: 8px;
-  font-size: 14px;
-  width: 100%;
-}
-
-/* 제출 버튼 스타일 */
-.add-menu-container button {
-  background-color: #4caf50;
-  color: #fff;
+.storeinfoedit-content input {
   padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.add-menu-container button:hover {
-  background-color: #45a049;
+.storeinfoedit-content button {
+  background-color: white; /* White button */
+  color: #27ae60; /* Green text */
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.storeinfoedit-content button:hover {
+  background-color: #218c53;
+  color: white;
+}
+
+.go-back-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.go-back-link a {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.go-back-link a:hover {
+  color: #217dbb;
 }

@@ -8,32 +8,31 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
+  }
   
-.register-container h2 {
+  .register-container h2 {
     text-align: center;
     color: #28a745; /* 초록색 */
     margin-bottom: 20px;
-}
+  }
   
-.register-form {
+  .register-form {
     display: flex;
     flex-direction: column;
-}
+  }
   
-.register-form label {
+  .register-form label {
     margin-bottom: 12px;
     color: #333;
-}
+  }
   
-.register-form input {
+  .register-form input {
     padding: 12px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 6px;
-}
-  
-.register-form button {
+  }
+  .register-form button {
     background-color: #28a745; /* 초록색 */
     color: #fff;
     padding: 16px;
@@ -41,8 +40,8 @@
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
-}
+  }
   
-.register-form button:hover {
+  .register-form button:hover {
     background-color: #218838; /* 더 어두운 초록색 */
-}
+  }

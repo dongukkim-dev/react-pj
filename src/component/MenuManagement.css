@@ -1,43 +1,85 @@
-/* MenuManagement.css */
+.managermain-container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 100%; /* 변경된 부분: 전체 폭을 차지하도록 수정 */
+}
 
-.menu-management-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff; /* 흰색 배경 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-    border-radius: 10px; /* 모서리 둥글게 */
-  }
-  
-  .menu-management-container h2 {
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .menu-management-container ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .menu-management-container li {
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px; /* 모서리 둥글게 */
-    transition: background-color 0.3s; /* 배경색 변경 효과 */
-  }
-  
-  .menu-management-container li:hover {
-    background-color: #eaf7ea; /* 호버 시 배경색 변경 (연한 초록색) */
-  }
-  
-  .menu-management-container a {
-    text-decoration: none;
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .menu-management-container a:hover {
-    text-decoration: underline; /* 호버 시 밑줄 표시 */
-  }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px; /* 변경된 부분: 좀 더 여백 추가 */
+  background-color: rgb(10, 173, 5);
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.header-menu {
+  display: flex;
+  gap: 10px;
+}
+
+.header-menu a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.header-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.order-list {
+  display: grid;
+  gap: 20px;
+}
+
+.order-item {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-item span {
+  margin-right: 10px;
+}
+
+.order-item button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order-item button:hover {
+  background-color: #218c53;
+}
+
+.add-menu-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.add-menu-link a {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.add-menu-link a:hover {
+  color: #217dbb;
+}

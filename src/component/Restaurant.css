@@ -1,49 +1,118 @@
 /* Restaurant.css */
 
+/* 전체 스타일링 */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
 /* Restaurant 클래스에 대한 스타일 */
 .Restaurant {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 30px;
-    border: 2px solid #4CAF50;
-    border-radius: 15px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* 제목 스타일 */
-  .Restaurant h2 {
-    color: #4CAF50;
-    font-size: 28px;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
-  /* 정보 섹션에 대한 스타일 */
-  .Restaurant div > div {
-    margin-top: 30px;
-  }
-  
-  /* 위치, 연락처, 리뷰, 메뉴와 같은 특정 섹션에 대한 스타일 */
-  .Restaurant h3 {
-    color: #4CAF50;
-    font-size: 24px;
-    border-bottom: 2px solid #4CAF50;
-    padding-bottom: 5px;
-  }
-  
-  /* 메뉴 목록 스타일 */
-  .Restaurant ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .Restaurant li {
-    margin-bottom: 15px;
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-  }
-  
-  /* 다른 섹션 또는 특정 요소에 필요한 스타일 추가 가능 */
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 2px solid #4CAF50;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 제목 스타일 */
+.Restaurant h2 {
+  color: #4CAF50;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* 섹션 간 구분선 */
+.Restaurant div > div {
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+/* 메뉴 목록 스타일 */
+.Restaurant ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.Restaurant li {
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 메뉴 클릭 시 호버 효과 */
+.Restaurant li:hover {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+/* 모달 오버레이 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달 스타일 */
+.modal {
+  max-width: 400px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 모달 내용 스타일 */
+.modal h2 {
+  color: #4CAF50;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.modal p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.modal label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #4CAF50;
+}
+
+.modal input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.modal button {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ... (기존 스타일 코드) ... */
