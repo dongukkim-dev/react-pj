@@ -37,12 +37,13 @@ const Restaurant = () => {
 return (
   <div className="Restaurant">
     <h2>{restaurantInfo.name}</h2>
-    {/* <p>가게의 ID: {id}</p> */}
+    <p>가게의 ID: {id}</p>
 
     {/* 가게에 대한 정보 */}
     <div>
       <h3>가게 정보</h3>
       <p>별점: {restaurantInfo.rating}</p>
+      <p>상세 정보: {restaurantInfo.content}</p>
       {/* <p>리뷰 수: {restaurantInfo.reviewCount}개</p> */}
       {/* <p>최소 주문 금액: {restaurantInfo.minOrderAmount}원</p> */}
     </div>

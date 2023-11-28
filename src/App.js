@@ -38,11 +38,12 @@ const Category = ({ name }) => {
   );
 };
 
-const RestaurantCard = ({ name }) => {
+const RestaurantCard = ({ id, name }) => {
   const navigate = useNavigate();
 
   const handleRestaurantClick = () => {
-    const restaurantId = name.toLowerCase().replace(/\s/g, '-');
+    // const restaurantId = name.toLowerCase().replace(/\s/g, '-');
+    const restaurantId = id;
     navigate(`/restaurant/${restaurantId}`);
   };
 
@@ -82,12 +83,12 @@ const MainPage = ({ restaurants, searchQuery, handleSearchChange, handleLogin, h
         </div>
         <Slider className="main-slider" {...settings}>
           {restaurants.map((restaurant) => (
-            <RestaurantCard key={restaurant.name} name={restaurant.name} />
+            <RestaurantCard key={restaurant.id} id={restaurant.id} name={restaurant.name} />
           ))}
         </Slider>
         <div className="restaurants">
           {restaurants.map((restaurant) => (
-            <RestaurantCard key={restaurant.name} name={restaurant.name} />
+            <RestaurantCard key={restaurant.id} id={restaurant.id} name={restaurant.name} />
           ))}
         </div>
       </main>
