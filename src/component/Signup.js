@@ -84,8 +84,6 @@ const Signup = () => {
       gender,
       memberType,
     });
-  };
-  };
 
   const handleGenderChange = (selectedGender) => {
     setGender(selectedGender);
@@ -130,7 +128,7 @@ const Signup = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         {!isValidEmail(email) && <p style={{ color: 'red' }}>이메일 형식이 올바르지 않습니다.</p>}
-        <button onClick={handleDuplicateCheck}>중복확인</button>
+        {/* <button onClick={handleDuplicateCheck}>중복확인</button> */}
       </div>
       <div>
         <label htmlFor="newPassword">비밀번호</label>
