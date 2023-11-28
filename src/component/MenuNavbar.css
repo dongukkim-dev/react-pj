@@ -1,0 +1,25 @@
+/* MenuNavbar.css (or add this to your existing CSS file) */
+
+.header-menu a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 20px; /* 일반 링크의 글씨 크기 */
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+  }
+  
+  /* 주문 관리 페이지에 대한 스타일 */
+  .header-menu a.order-management {
+    font-size: 24px; /* 주문 관리 페이지의 글씨 크기 */
+    background-color: #e74c3c; /* 배경색 변경 */
+    color: white;
+    padding: 12px 20px; /* 좀 더 큰 패딩 추가 */
+  }
+  
+  .header-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  

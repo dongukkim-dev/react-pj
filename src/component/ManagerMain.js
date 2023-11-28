@@ -16,17 +16,6 @@ const ManagerMain = () => {
 
   return (
     <div className="managermain-container">
-      <div className="header">
-        <h1>주문 관리 페이지</h1>
-        <div className="header-menu">
-          <Link to="/store-info-edit">가게 정보 수정</Link>
-          <Link to="/menu-management">메뉴 관리</Link> {/* 메뉴 추가 버튼을 메뉴 관리 버튼으로 변경 */}
-          <Link to="/mypage">마이페이지</Link>
-          <Link to="/sales">매출 관리</Link>
-          <Link to="/login" className="nav-link" onClick={handleLogout}>로그아웃</Link>
-        </div>
-      </div>
-
       <div className="order-list">
         <div className="order-item">
           <span>주문 ID: 1</span>
@@ -43,7 +32,7 @@ const ManagerMain = () => {
           <button onClick={() => processOrder(2, 'accepted')}>수락</button>
           <button onClick={() => processOrder(2, 'rejected')}>거절</button>
         </div>
-       
+        {/* 다른 주문 아이템들을 추가합니다 */}
       </div>
 
       <div className="go-back-link">

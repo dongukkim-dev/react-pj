@@ -1,5 +1,3 @@
-// Signup.js
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -12,7 +10,8 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
-  const [gender, setGender] = useState(''); // 추가: 성별 상태 추가
+  const [gender, setGender] = useState('');
+  const [memberType, setMemberType] = useState('regular');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -43,7 +42,7 @@ const Signup = () => {
       return;
     }
 
-    if (!gender) { // 추가: 성별 선택 여부 확인
+    if (!gender) {
       setError('성별을 선택하세요.');
       return;
     }
@@ -70,32 +69,43 @@ const Signup = () => {
     .catch(error => console.log(error))
   };
 
-  const handleDuplicateCheck = () => {
-    // 중복확인 로직을 구현합니다.
-    console.log('이메일 중복 확인 시도:', email);
+    if (!memberType) {
+      setError('회원 유형을 선택하세요.');
+      return;
+    }
+
+    // 회원가입 로직
+    console.log('회원가입 시도:', {
+      newUsername,
+      newPassword,
+      email,
+      phoneNumber,
+      address,
+      gender,
+      memberType,
+    });
+  };
   };
 
   const handleGenderChange = (selectedGender) => {
     setGender(selectedGender);
   };
 
-  // 이메일 유효성 검사 함수
+  const handleMemberTypeChange = (selectedMemberType) => {
+    setMemberType(selectedMemberType);
+  };
+
   const isValidEmail = (value) => {
-    // 간단한 형식의 이메일 유효성 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value);
   };
 
-  // 비밀번호 유효성 검사 함수
   const isValidPassword = (value) => {
-    // 비밀번호는 8자리 이상, 특수문자를 포함해야 함
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     return passwordRegex.test(value);
   };
 
-  // 전화번호 유효성 검사 함수
   const isValidPhoneNumber = (value) => {
-    // 간단한 형식의 전화번호 유효성 검사 (010-xxxx-xxxx)
     const phoneNumberRegex = /^010-\d{4}-\d{4}$/;
     return phoneNumberRegex.test(value);
   };
@@ -109,7 +119,7 @@ const Signup = () => {
   }
 
   return (
-    <div>
+    <div className="signup-container">
       <h2>회원가입</h2>
       <div>
         <label htmlFor="email">이메일:</label>
@@ -123,7 +133,7 @@ const Signup = () => {
         <button onClick={handleDuplicateCheck}>중복확인</button>
       </div>
       <div>
-        <label htmlFor="newPassword">비밀번호:</label>
+        <label htmlFor="newPassword">비밀번호</label>
         <input
           type="password"
           id="newPassword"
@@ -133,7 +143,7 @@ const Signup = () => {
         {!isValidPassword(newPassword) && <p style={{ color: 'red' }}>비밀번호는 8자리 이상이어야 하며, 특수문자를 포함해야 합니다.</p>}
       </div>
       <div>
-        <label htmlFor="confirmPassword">비밀번호 확인:</label>
+        <label htmlFor="confirmPassword">비밀번호 확인</label>
         <input
           type="password"
           id="confirmPassword"
@@ -153,7 +163,7 @@ const Signup = () => {
         {!isValidName(newUsername) && <p style={{ color: 'red' }}>이름 형식이 올바르지 않습니다.</p>}
       </div>
       <div>
-        <label htmlFor="phoneNumber">전화번호:</label>
+        <label htmlFor="phoneNumber">전화번호</label>
         <input
           type="text"
           id="phoneNumber"
@@ -163,28 +173,66 @@ const Signup = () => {
         {!isValidPhoneNumber(phoneNumber) && <p style={{ color: 'red' }}>010-0000-0000 형식으로 입력해야 합니다.</p>}
       </div>
       <div>
-        <label>성별:</label>
-        <div>
-          <input
-            type="radio"
-            id="MALE"
-            name="gender"
-            value="MALE"
-            checked={gender === 'MALE'}
-            onChange={() => handleGenderChange('MALE')}
-          />
-          <label htmlFor="MALE">남성</label>
+        <label htmlFor="address">주소</label>
+        <input
+          type="text"
+          id="address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="gender-label">성별</label>
+        <div className="gender-options">
+          <label htmlFor="male">
+            <input
+              type="radio"
+              id="male"
+              name="gender"
+              value="male"
+              checked={gender === 'male'}
+              onChange={() => handleGenderChange('male')}
+            />
+            남성
+          </label>
+          <label htmlFor="female">
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="female"
+              checked={gender === 'female'}
+              onChange={() => handleGenderChange('female')}
+            />
+            여성
+          </label>
         </div>
-        <div>
-          <input
-            type="radio"
-            id="FEMALE"
-            name="gender"
-            value="FEMALE"
-            checked={gender === 'FEMALE'}
-            onChange={() => handleGenderChange('FEMALE')}
-          />
-          <label htmlFor="FEMALE">여성</label>
+      </div>
+      <div>
+        <label className="member-type-label">회원 유형</label>
+        <div className="member-type-options">
+          <label htmlFor="regular">
+            <input
+              type="radio"
+              id="regular"
+              name="memberType"
+              value="regular"
+              checked={memberType === 'regular'}
+              onChange={() => handleMemberTypeChange('regular')}
+            />
+            일반 회원
+          </label>
+          <label htmlFor="storeOwner">
+            <input
+              type="radio"
+              id="storeOwner"
+              name="memberType"
+              value="storeOwner"
+              checked={memberType === 'storeOwner'}
+              onChange={() => handleMemberTypeChange('storeOwner')}
+            />
+            가맹점
+          </label>
         </div>
         {!gender && <p style={{ color: 'red' }}>성별을 선택해야 합니다.</p>}
       </div>
