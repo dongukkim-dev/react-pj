@@ -2,45 +2,26 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
 import './login.css'; 
-import axios from 'axios';
 
 const Login = () => {
-  const { login } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
-  const [user, setUser] = useState({
-    email: '',
-    password: ''
-  });
-
-  const {email, password} = user;
-
-  const handleUser = (e) => {
-    const {value, name} = e.target;
-    setUser({
-      ...user,
-      [name]:value
-    });
-  }
 
   const handleLogin = () => {
     // 실제 로그인 로직을 수행합니다.
     // 성공하면 관리자 페이지로 이동합니다.
-    console.log('로그인 시도:', { email, password });
+    console.log('로그인 시도:', { username, password });
 
-    function success_user() {
-      login();
-      navigate('/');
-    };
-    function success_admin_first() {
-      login();
-      navigate('/register');
-    }
-    function success_admin() {
-      login();
+    // 여기에서 로그인 성공 여부를 판단하여 페이지 이동
+    const loginSuccessful = true; // 예시로 성공했다고 가정
+
+    if (loginSuccessful) {
       navigate('/managermain');
+
+    } else {
+      alert('로그인 실패. 올바른 사용자 이름과 비밀번호를 입력하세요.');
     }
     function fail() {
       alert('로그인 실패했습니다.');
@@ -48,6 +29,7 @@ const Login = () => {
 
     httpRequest('/api/login', user, success_user, success_admin, success_admin_first, fail);
   };
+
   const handleSocialLogin = (provider) => {
     // SNS 로그인 로직 구현
     console.log(`SNS ${provider} 계정으로 로그인 시도`);
@@ -71,15 +53,21 @@ const Login = () => {
           onChange={handleUser}
         />
       </div>
-      <div>
+      <div className="password-container">
         <label htmlFor="password">비밀번호:</label>
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           id="password"
           name="password"
           value={password}
           onChange={handleUser}
         />
+        <span
+          className={`password-toggle-icon ${showPassword ? 'visible' : ''}`}
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          👁️
+        </span>
       </div>
       <div>
         <button className="login-button" onClick={handleLogin}>
@@ -87,16 +75,24 @@ const Login = () => {
         </button>
       </div>
       <div>
-      <Link to="/sns-signup">
-          <button className="social-button-google" onClick={() => handleSocialLogin('Google')}>Google로 로그인</button>
+        <Link to="/sns-signup">
+          <button
+            className="social-button-google"
+            onClick={() => handleSocialLogin('Google')}
+          >
+            Google로 로그인
+          </button>
         </Link>
         <Link to="/sns-signup">
-          <button className="social-button-facebook" onClick={() => handleSocialLogin('Facebook')}>Facebook으로 로그인</button>
+          <button
+            className="social-button-facebook"
+            onClick={() => handleSocialLogin('Facebook')}
+          >
+            Facebook으로 로그인
+          </button>
         </Link>
       </div>
-      {/* <div className="signup-text" onClick={handleSignUp}>아직 회원이 아니신가요?</div>
-      <button className="signup-link" onClick={handleSignUp}>회원가입</button> */}
-       <div className="signup-text">
+      <div className="signup-text">
         아직 회원이 아니신가요? <Link to="/signup">회원가입</Link>
       </div>
     </div>

@@ -25,8 +25,12 @@ label {
   color: #555;
 }
 
+.input-container {
+  position: relative;
+}
+
 input {
-  width: 100%;
+  width: calc(100% - 32px);
   padding: 8px;
   margin-bottom: 16px;
   box-sizing: border-box;
@@ -34,19 +38,36 @@ input {
   border-radius: 4px;
 }
 
+.password-container {
+  display: flex;
+  align-items: center;
+  position: relative; /* 수정된 부분: 상대 위치 지정 */
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right:0;
+  cursor: pointer;
+  color: #777;
+}
+
+.password-toggle-icon.visible {
+  color: #333;
+}
+
 .login-button {
-  background-color: #4caf50; /* 초록색 */
+  background-color: #4caf50;
   color: #fff;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-  margin-bottom: 16px; /* 수정된 부분: 버튼 아래 여백 추가 */
+  margin-bottom: 16px;
 }
 
 .login-button:hover {
-  background-color: #45a049; /* 진한 초록색 */
+  background-color: #45a049;
 }
 
 .social-buttons {
@@ -55,7 +76,7 @@ input {
 
 .social-button-google,
 .social-button-facebook {
-  background-color: #4caf50; /* 초록색 */
+  background-color: #4caf50;
   color: #fff;
   padding: 10px 15px;
   border: none;
@@ -67,7 +88,7 @@ input {
 
 .social-button-google:hover,
 .social-button-facebook:hover {
-  background-color: #45a049; /* 진한 초록색 */
+  background-color: #45a049;
 }
 
 .signup-text {
