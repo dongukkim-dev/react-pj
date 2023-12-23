@@ -153,7 +153,10 @@ const Restaurant = () => {
 
   return (
     <div className="Restaurant">
-      <img src={`http://localhost:8080/${restaurantInfo.picture}`} alt="가게 이미지" style={{ width: '800px', height: '300px' }} />
+      <img src={`http://localhost:8080/${restaurantInfo.picture}`} 
+      alt="가게 이미지" 
+      style={{ width: '800px', height: '533px' }} 
+      />
       <h2>{restaurantInfo.name}</h2>
       <div>
         <button onClick={handleLike}>
@@ -198,7 +201,7 @@ const Restaurant = () => {
             ))}
           </ul>
 
-          <Pagination
+          {/* <Pagination
             activePage={currentPage}
             itemsCountPerPage={perPage}
             totalItemsCount={totalData}
@@ -211,7 +214,7 @@ const Restaurant = () => {
             itemClass="page-item"
             linkClass="page-link"
             innerClass="pagination"
-          />
+          /> */}
         </div>
       )}
 
