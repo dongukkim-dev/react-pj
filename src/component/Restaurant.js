@@ -231,7 +231,7 @@ const Restaurant = () => {
       {selectedTab === 'info' && (
         <div>
           <h3>가게 정보</h3>
-          <p>별점: {reviews.length === 0 ? 0 : calculateAverageRating()}</p>
+          <p>별점: {reviews.length === 0 ? 0 : Number(calculateAverageRating().toFixed(2))}</p>
           <p>리뷰 수: {reviews.length}개</p>
           <p>주소: {restaurantInfo.address + " " + restaurantInfo.detail}</p>
         </div>
@@ -241,27 +241,22 @@ const Restaurant = () => {
         <div>
           <h3>리뷰</h3>
           {reviews.map((review) => (
-            <div key={review.id}>
-              <p>{review.userName}</p>
-              <p>{review.content}</p>
-              <p>주문 상품: {review.itemNames.join(', ')}</p>
-              <p>별점: {review.rating}</p>
+            <div className="review-page" key={review.id} >
+              <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
+                <p>회원: {review.userName}</p>
+                <p>상세 내용: {review.content}</p>
+                <p>주문 상품: {review.itemNames.join(', ')}</p>
+                <p>별점: {review.rating}</p>
+              </div>
+              <div>
+                <img
+                  src={`http://localhost:8080/${review.picture}`}
+                  alt="대표 사진 미리보기"
+                  style={{ width: '300px', height: '300px' }}
+                />
+              </div>
             </div>
           ))}
-          <Pagination
-            activePage={currentPage}
-            itemsCountPerPage={perPage}
-            totalItemsCount={totalData} // 리뷰 데이터의 총 개수로 설정
-            pageRangeDisplayed={5}
-            onChange={handlePageChange}
-            prevPageText="<"
-            nextPageText=">"
-            firstPageText="<<"
-            lastPageText=">>"
-            itemClass="page-item"
-            linkClass="page-link"
-            innerClass="pagination"
-          />
         </div>
       )}
 

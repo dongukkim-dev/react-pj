@@ -9,6 +9,7 @@ const ReviewModal = ({ isOpen, onClose, onSubmit, order }) => {
   });
   const [file, setFile] = useState(null);
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState('https://picsum.photos/id/237/200/300');
 
   const handleRatingChange = (value) => {
     setNewReview({ ...newReview, rating: value });
@@ -77,7 +78,7 @@ const ReviewModal = ({ isOpen, onClose, onSubmit, order }) => {
           </select>
         </div>
         <div>
-          <label htmlFor="menuImage">리뷰 사진 </label>
+          <label htmlFor="reviewImage">리뷰 사진 </label>
           <div>
             <input
               type="file"
@@ -86,6 +87,16 @@ const ReviewModal = ({ isOpen, onClose, onSubmit, order }) => {
             />
           </div>
         </div>
+        {previewUrl && (
+          <div>
+            <label htmlFor="reviewImage">사진 미리보기 </label>
+            <img
+              src={file ? URL.createObjectURL(file) : null}
+              alt="리뷰 사진 미리보기"
+              style={{ width: '300px', height: '200px' }}
+            />
+          </div>
+        )}
         <div>
           <label htmlFor="content">리뷰 작성</label>
           <textarea

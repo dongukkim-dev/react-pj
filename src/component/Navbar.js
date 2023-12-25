@@ -37,7 +37,7 @@ const Navbar = ({ handleSearchChange, fetchRestaurants }) => {
   };
 
   const handleHomeClick = () => {
-    navigate('/');
+    navigate('/', { state: { reload: true }});
   };
 
   return (

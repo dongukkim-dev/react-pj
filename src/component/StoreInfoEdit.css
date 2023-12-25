@@ -143,8 +143,6 @@
   margin: 0 auto; /* 수정: 중앙 정렬을 위해 margin 추가 */
 }
 
-
-
 .modal button {
   margin-top: 10px;
   margin-right: 10px; 
@@ -162,3 +160,20 @@
   border-bottom: 2px solid #a1f8a3;
 }
 
+.location-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* 위아래 여백 추가 */
+}
+
+.location-container label {
+  margin-right: 10px; /* 레이블과 입력창 간격 추가 */
+}
+
+.location-container input {
+  flex: 1; /* 입력창이 가능한 영역을 최대한 확보합니다. */
+}
+
+.location-container button {
+  margin-left: 10px; /* 입력창과 버튼 간격 추가 */
+}

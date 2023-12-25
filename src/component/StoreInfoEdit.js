@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './StoreInfoEdit.css';
 import axios from 'axios';
+import DaumPostcode from 'react-daum-postcode';
 import MenuDetail from './MenuDetail';
 
 const StoreInfoEdit = () => {
@@ -13,6 +14,9 @@ const StoreInfoEdit = () => {
   const [updatedStoreInfo, setUpdatedStoreInfo] = useState({ ...storeInfo });
   const [previewUrl, setPreviewUrl] = useState('https://picsum.photos/id/237/200/300');
 
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isDaumAddressModalOpen, setIsDaumAddressModalOpen] = useState(false);
+
   // 새로운 상태 추가
   const [selectedMenuItem, setSelectedMenuItem] = useState({});
 
@@ -22,8 +26,26 @@ const StoreInfoEdit = () => {
   });
   const [file, setFile] = useState(null);
   const storeId = localStorage.getItem('store_id');
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  const openDaumAddressModal = () => {
+    setIsDaumAddressModalOpen(true);
+  };
+
+  const closeDaumAddressModal = () => {
+    setIsDaumAddressModalOpen(false);
+  };
+  const handleDaumAddressComplete = (data) => {
+    const { address, addressType, userSelectedType, userLanguageType } = data;
+    // 사용자가 선택한 주소 정보를 가게 위치에 업데이트
+    setUpdatedStoreInfo((prevInfo) => ({
+      ...prevInfo,
+      address,
+    }));
+    closeDaumAddressModal();
   };
 
   useEffect(() => {
@@ -77,6 +99,8 @@ const StoreInfoEdit = () => {
   };
 
   const closeEditModal = () => {
+    //여기서 주소를 되돌리는 동작을 해야함
+    setUpdatedStoreInfo(storeInfo);
     setFile(null);
     setEditModalOpen(false);
   };
@@ -104,6 +128,7 @@ const StoreInfoEdit = () => {
         });
 
         setStoreInfo(updatedStoreInfo);
+        alert('가게 정보 수정이 완료되었습니다');
         closeEditModal();
       } catch (error) {
         console.error('업데이트 실패:', error);
@@ -188,20 +213,21 @@ const StoreInfoEdit = () => {
 
   // StoreInfoEdit.js에서 이미지 업데이트 처리
   const handleMenuDetailClose = (data) => {
-    // 이미 있는 아이템인지 확인
-    const isItemExist = itemInfo.some(item => item.itemId === data.itemId);
 
-    console.log('존재확인', isItemExist);
+    if (data) {
+      // 이미 있는 아이템인지 확인
+      const isItemExist = itemInfo.some(item => item.itemId === data.itemId);
 
-    if (isItemExist) {
-      setItemInfo((prevItem) =>
-        prevItem.map(item =>
-          item.itemId === data.itemId ? { ...item, ...data } : item
-        )
-      );
+      console.log('존재확인', isItemExist);
+
+      if (isItemExist) {
+        setItemInfo((prevItem) =>
+          prevItem.map(item =>
+            item.itemId === data.itemId ? { ...item, ...data } : item
+          )
+        );
+      }
     }
-
-    console.log(itemInfo);
 
     closeNewMenuItemModal();
   };
@@ -283,14 +309,19 @@ const StoreInfoEdit = () => {
                   </div>
                   <div>
                     <label htmlFor="editedLocation"> 가게 위치</label>
-                    <input
-                      type="text"
-                      id="editedLocation"
-                      value={updatedStoreInfo.address}
-                      onChange={(e) =>
-                        setUpdatedStoreInfo({ ...updatedStoreInfo, address: e.target.value })
-                      }
-                    />
+                    <div className='location-container'>
+                      <input
+                        type="text"
+                        id="editedLocation"
+                        value={updatedStoreInfo.address} readOnly
+                        onChange={(e) =>
+                          setUpdatedStoreInfo({ ...updatedStoreInfo, address: e.target.value })
+                        }
+                      />
+                      <button type="button" onClick={openDaumAddressModal}>
+                        주소 검색
+                      </button>
+                    </div>
                   </div>
                   <div>
                     <label htmlFor="editedLocation"> 상세 주소</label>
@@ -387,6 +418,18 @@ const StoreInfoEdit = () => {
             )}
           </form>
         </>
+      )}
+
+      {isDaumAddressModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            {/* DaumPostcode 모달 열기 */}
+            <DaumPostcode onComplete={handleDaumAddressComplete} />
+            <button className="close-button" onClick={closeDaumAddressModal}>
+              닫기
+            </button>
+          </div>
+        </div>
       )}
 
       {activeTab === 'menuManagement' && (

@@ -54,8 +54,20 @@ const ProcessingOrders = ({ orders, processOrder }) => {
             )}
             <p>총가격: {totalPrice}원</p>
             <div className='process-buttons'>
-              <button onClick={(event) => { event.stopPropagation(); processOrder(order.order_id, 'READY'); }}>수락</button>
-              <button onClick={(event) => { event.stopPropagation(); processOrder(order.order_id, 'CANCEL'); }}>거절</button>
+              <button onClick={(event) => {
+                event.stopPropagation();
+                const confirmWithdrawal = window.confirm('주문을 수락하시겠습니까?');
+                if (confirmWithdrawal) {
+                  processOrder(order.order_id, 'READY');
+                }
+              }}>수락</button>
+              <button onClick={(event) => {
+                event.stopPropagation();
+                const confirmWithdrawal = window.confirm('주문을 거절하시겠습니까?');
+                if (confirmWithdrawal) {
+                  processOrder(order.order_id, 'CANCEL');
+                }
+              }}>거절</button>
             </div>
           </div>
         )

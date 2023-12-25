@@ -82,8 +82,10 @@ const MenuDetail = ({ selectedItem, onClose, setItemInfo }) => {
         // itemInfo 상태를 업데이트하여 삭제한 상품을 제외한 목록을 다시 설정
         setItemInfo((prevItem) => prevItem.filter(item => item.itemId !== id));
 
+        alert('상품이 삭제되었습니다.');
         // 모달 닫기
         closeEditModal();
+        onClose();
       } catch (error) {
         console.error('상품 삭제 실패:', error);
         alert('상품 삭제에 실패했습니다.');

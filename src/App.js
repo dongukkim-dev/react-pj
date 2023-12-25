@@ -1,7 +1,7 @@
 // app.js
 
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate, useLocation } from 'react-router-dom';
 import MyPage from './component/Mypage';
 import Wishlist from './component/Wishlist';
 import Cart from './component/Cart';
@@ -64,11 +64,19 @@ const RestaurantCard = ({ id, name, picture, rating }) => {
 
 const MainPage = ({ restaurants, searchQuery, handleSearchChange, handleLogin, handleLogout, isLoggedIn, fetchRestaurants }) => {
   const [categoryRestaurants, setCategoryRestaurants] = useState([]);
+  const { state } = useLocation();
 
   useEffect(() => {
     // 처음 로드될 때는 전체 음식점 목록을 설정
     setCategoryRestaurants(restaurants);
   }, [restaurants]);
+
+  useEffect(() => {
+    if (state?.reload) {
+      fetchRestaurants();
+      navigate('/', { replace: true, state: { reload: false } });
+    }
+  }, [state?.reload]);
 
   const navigate = useNavigate();
 
@@ -93,7 +101,7 @@ const MainPage = ({ restaurants, searchQuery, handleSearchChange, handleLogin, h
             <FontAwesomeIcon icon={faShrimp} size="2x" />일식, 회, 돈까스
           </div>
           <div onClick={() => handleCategoryClick('양식')} className="category">
-          <GiSteak fontSize="30px"/>양식
+            <GiSteak fontSize="30px" />양식
           </div>
           <div onClick={() => handleCategoryClick('치킨')} className="category">
             <FontAwesomeIcon icon={faDrumstickBite} size="2x" />치킨
@@ -111,7 +119,7 @@ const MainPage = ({ restaurants, searchQuery, handleSearchChange, handleLogin, h
             <FontAwesomeIcon icon={faHamburger} size="2x" />버거
           </div>
           <div onClick={() => handleCategoryClick('국수')} className="category">
-            <GiNoodles fontSize="30px"/>국수
+            <GiNoodles fontSize="30px" />국수
           </div>
         </div>
         <div className="restaurants">
@@ -161,8 +169,8 @@ const App = () => {
     <Router>
       <AuthProvider>
         {/* Navbar를 모든 페이지에 표시 */}
-        <Navbar handleSearchChange={handleSearchChange}/>
-        <MenuNavbar handleSearchChange={handleSearchChange} fetchRestaurants={fetchRestaurants}/>
+        <Navbar handleSearchChange={handleSearchChange} />
+        <MenuNavbar handleSearchChange={handleSearchChange} fetchRestaurants={fetchRestaurants} />
         <Routes>
           {/* 메인페이지 */}
           <Route

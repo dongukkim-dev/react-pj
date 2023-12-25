@@ -52,7 +52,6 @@ body {
 }
 
 .Restaurant div > div {
-  border-bottom: 2px solid #e0e0e0;
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
@@ -157,7 +156,6 @@ body {
 
 
 .Restaurant > div > div {
-  text-align: center;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -248,4 +246,10 @@ body {
 
 .menu-buttons button {
   width: 100px;
+}
+
+.review-page {
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
