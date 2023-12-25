@@ -23,8 +23,7 @@ const Restaurant = () => {
   const [menuList, setMenuList] = useState([]);
 
   const { id } = useParams();
-  const userId = localStorage.getItem('user_id'); // 사용자 ID 불러오기
-
+  let userId = localStorage.getItem('user_id'); // 사용자 ID 불러오기
   let totalPrice;
 
   useEffect(() => {
@@ -68,16 +67,19 @@ const Restaurant = () => {
         setReviews([]);
       });
 
-    axios.get(`/api/bookmark/${id}`, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        setIsLiked(response.data.status);
-        setLikeCount(response.data.count);
+    if (userId !== null) {
+      console.log('실행되는 경우', typeof(userId));
+      axios.get(`/api/bookmark/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json',
+        },
       })
+        .then(response => {
+          setIsLiked(response.data.status);
+          setLikeCount(response.data.count);
+        })
+    }
   }, []);
 
   const handleMenuButtonClick = (menu) => {
@@ -86,11 +88,26 @@ const Restaurant = () => {
   };
 
   const handleAddToCart = () => {
+
+    if (userId === '0') {
+      alert("로그인 하지 않은 사용자는 이용할 수 없습니다.");
+      setModalOpen(false);
+      return;
+    }
+
     // 현재 로컬 스토리지의 장바구니 데이터를 불러옴
     const existingCartData = JSON.parse(localStorage.getItem(userId)) || [];
 
+    // 첫 번째 요소의 storeId 값이 존재하고, 새로 추가할 아이템의 storeId 값이 다르다면 경고 메시지 출력
+    if (existingCartData.length > 0 && existingCartData[0].storeId !== id) {
+      alert("이미 다른 음식점의 상품이 장바구니에 있어 추가할 수 없습니다.");
+      setModalOpen(false);
+      return;
+    }
+
     // 새로 추가할 아이템
     const newItem = {
+      storeId: id,
       itemId: selectedMenu.itemId,
       amount: quantity,
     };
@@ -153,7 +170,9 @@ const Restaurant = () => {
 
   return (
     <div className="Restaurant">
-      <img src={`http://localhost:8080/${restaurantInfo.picture}`} alt="가게 이미지" style={{ width: '800px', height: '300px' }} />
+      <img src={`http://localhost:8080/${restaurantInfo.picture}`}
+        alt="가게 이미지"
+        style={{ width: '800px', height: '533px' }} />
       <h2>{restaurantInfo.name}</h2>
       <div>
         <button onClick={handleLike}>
@@ -188,7 +207,7 @@ const Restaurant = () => {
                   />
                 ) : (
                   <img
-                    src={`http://localhost:8080/upload\\itemImg\\231215\\NoImage.avif`}
+                    src={`http://localhost:8080/upload\\itemImg\\231215\\NoImage.png`}
                     alt="No Image"
                     style={{ width: '150px', height: '150px', marginRight: '10px' }}
                   />
@@ -198,7 +217,7 @@ const Restaurant = () => {
             ))}
           </ul>
 
-          <Pagination
+          {/* <Pagination
             activePage={currentPage}
             itemsCountPerPage={perPage}
             totalItemsCount={totalData}
@@ -211,7 +230,7 @@ const Restaurant = () => {
             itemClass="page-item"
             linkClass="page-link"
             innerClass="pagination"
-          />
+          /> */}
         </div>
       )}
 
@@ -235,7 +254,7 @@ const Restaurant = () => {
               <p>별점: {review.rating}</p>
             </div>
           ))}
-           <Pagination
+          <Pagination
             activePage={currentPage}
             itemsCountPerPage={perPage}
             totalItemsCount={totalData} // 리뷰 데이터의 총 개수로 설정

@@ -260,7 +260,7 @@ const MyPage = () => {
                       ))}
                     </ul>
                     {order.review && order.review.id != null ? (
-                      <div className='review-button-container'>
+                      <div className='button-container'>
                         <button onClick={() => openReviewModal(order)}>리뷰 수정</button>
                         <button onClick={() => confirmReviewDeletion(order)}>리뷰 삭제</button>
                       </div>

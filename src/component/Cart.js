@@ -91,7 +91,7 @@ const Cart = () => {
         <span>총 주문 금액: {calculateTotalPrice()}원</span>
       </div>
 
-      <Link to={{ pathname: "/payment", state: { totalPrice: totalPrice } }} className="order-button">
+      <Link to={"/payment"} state={{ userId: userId, cartItems: cartItems, totalPrice: totalPrice }} className="order-button">
         주문하러 가기
       </Link>
     </div>

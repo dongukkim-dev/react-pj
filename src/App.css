@@ -25,10 +25,12 @@ header {
   height: 30px;
   text-decoration: none;
 }
+
 .header-left svg {
   width: 30px;
   height: 30px;
 }
+
 .header-left path {
   fill: #333 !important;
 }
@@ -36,6 +38,7 @@ header {
 .header-right input {
   margin-right: 10px;
 }
+
 .header-title {
   height: 30px;
   line-height: 30px;
@@ -44,16 +47,20 @@ header {
   font-weight: bold;
   color: #333;
 }
-.header-right .nav-link {
+
+.header-right .nav-link,
+.header-right input {
+  display: inline-block;
   text-decoration: none;
-    margin: 0 15px;
-    font-size: 14px;
-    height: 34px;
-    line-height: 30px;
-    border-radius: 5px;
-    padding: 5px 10px;
-    color: #333;
+  margin: 0 15px;
+  font-size: 14px;
+  height: 34px;
+  line-height: 30px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: #333;
 }
+
 .header-right .nav-link:hover {
   background: #ffffff63;
   font-weight: bold;
@@ -62,46 +69,67 @@ header {
 
 .categories {
   display: flex;
-  overflow-x: auto; /* 가로 스크롤을 허용하도록 설정 */
-  padding: 10px; /* 좌우 여백 추가 */
-  gap: 20px; /* 간격을 더 늘림 */
+  overflow-x: auto;
+  /* 가로 스크롤을 허용하도록 설정 */
+  padding: 10px;
+  /* 좌우 여백 추가 */
+  gap: 20px;
+  /* 간격을 더 늘림 */
   display: flex;
-  overflow-x: auto; /* 가로 스크롤을 허용하도록 설정 */
-  padding: 10px; /* 좌우 여백 추가 */
-  gap: 20px; /* 간격을 더 늘림 */
+  overflow-x: auto;
+  /* 가로 스크롤을 허용하도록 설정 */
+  padding: 10px;
+  /* 좌우 여백 추가 */
+  gap: 20px;
+  /* 간격을 더 늘림 */
   background-color: #f2f2f2;
 }
 
 .category {
-  flex: 1; /* 각 카테고리가 동일한 너비를 갖도록 수정 */
-  background-color: #8bc34a; /* 연한 초록색 배경색으로 수정 */
+  flex: 1;
+  /* 각 카테고리가 동일한 너비를 갖도록 수정 */
+  background-color: #8bc34a;
+  /* 연한 초록색 배경색으로 수정 */
   color: white;
-  padding: 8px 12px; /* 패딩을 더 작게 조절 */
-  border-radius: 20px; /* 더 둥근 모양으로 */
+  padding: 8px 12px;
+  /* 패딩을 더 작게 조절 */
+  border-radius: 20px;
+  /* 더 둥근 모양으로 */
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  white-space: nowrap; /* 텍스트가 길어져도 줄 바꿈을 하지 않도록 설정 */
-  text-decoration: none; /* 링크의 밑줄 제거 */
-  white-space: nowrap; /* 텍스트가 길어져도 줄 바꿈을 하지 않도록 설정 */
-  text-decoration: none; /* 링크의 밑줄 제거 */
+  white-space: nowrap;
+  /* 텍스트가 길어져도 줄 바꿈을 하지 않도록 설정 */
+  text-decoration: none;
+  /* 링크의 밑줄 제거 */
+  white-space: nowrap;
+  /* 텍스트가 길어져도 줄 바꿈을 하지 않도록 설정 */
+  text-decoration: none;
+  /* 링크의 밑줄 제거 */
 }
 
 .category:hover,
 .category.active {
-  background-color: #4caf50; /* 호버 시 어두운 초록색으로 수정 */
+  background-color: #4caf50;
+  /* 호버 시 어두운 초록색으로 수정 */
 }
+
 .restaurants {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: stretch; /* 세로폭이 늘어나도록 설정 */
+  align-items: stretch;
+  /* 세로폭이 늘어나도록 설정 */
   padding: 20px;
 }
+
 .restaurant-card {
-  flex: 0 0 calc(25% - 20px); /* 한 줄에 4개의 카드가 들어가도록 설정 */
+  flex: 0 0 calc(25% - 20px);
+  /* 한 줄에 4개의 카드가 들어가도록 설정 */
   margin: 10px;
-  background-color: #fff; /* 음식점 카드 배경색 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  background-color: #fff;
+  /* 음식점 카드 배경색 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* 그림자 효과 */
   border-radius: 8px;
   padding: 20px;
   text-align: center;
@@ -109,7 +137,8 @@ header {
 }
 
 .restaurant-card:hover {
-  transform: scale(1.05); /* 호버 시 확대 효과 */
+  transform: scale(1.05);
+  /* 호버 시 확대 효과 */
 }
 
 .my-page-link,
@@ -125,11 +154,13 @@ header {
 }
 
 .my-page-link:hover {
-  background-color: rgb(105, 163, 108); /* 더 진한 그린 톤 */
+  background-color: rgb(105, 163, 108);
+  /* 더 진한 그린 톤 */
   text-decoration: underline;
 }
 
 .logout-button:hover {
-  background-color: #8bc34a; /* 더 연한 초록색 */
+  background-color: #8bc34a;
+  /* 더 연한 초록색 */
   color: black;
 }

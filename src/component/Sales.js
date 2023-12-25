@@ -10,21 +10,6 @@ const generateRandomData = (length, max) => {
   return Array.from({ length }, () => Math.floor(Math.random() * max));
 };
 
-const generateWeeklyData = () => {
-  // Assuming today is Sunday
-  const today = new Date();
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - today.getDay()); // Move to the start of the week (Sunday)
-
-  return Array.from({ length: 4 }, (_, weekIndex) => {
-    const currentWeekStart = new Date(startOfWeek);
-    currentWeekStart.setDate(startOfWeek.getDate() + weekIndex * 7);
-    const currentWeekEnd = new Date(currentWeekStart);
-    currentWeekEnd.setDate(currentWeekStart.getDate() + 6);
-
-    return `${currentWeekStart.toLocaleDateString()} - ${currentWeekEnd.toLocaleDateString()}`;
-  });
-};
 const generateYearlySalesData = (years, max) => {
   const currentYear = new Date().getFullYear();
   const startYear = currentYear - years + 1;
@@ -40,11 +25,9 @@ const generateYearlySalesData = (years, max) => {
 
 const Sales = () => {
   const [salesType, setSalesType] = useState('daily');
-  const [yearlySales, setYearlySales] = useState(generateYearlySalesData(8, 5000)); // Assuming 8 years of data
-
-  const [monthlySales, setMonthlySales] = useState(generateRandomData(12, 5000));
-  const [weeklySales, setWeeklySales] = useState(generateRandomData(4, 5000));
-  const [dailySales, setDailySales] = useState(generateRandomData(7, 5000));
+  const [yearlySales, setYearlySales] = useState([]); // Assuming 8 years of data
+  const [monthlySales, setMonthlySales] = useState([]);
+  const [dailySales, setDailySales] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [menuSales, setMenuSales] = useState([
     { name: '메뉴1', quantity: 10, price: 5000 },
@@ -57,21 +40,28 @@ const Sales = () => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-
+    const id = localStorage.getItem('store_id');
     //판매 정보 데이터를 가져오는 코드
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/menu-sales', {
+        const response = await axios.get(`/api/sales/${id}`, {
           // Add headers or parameters as needed
         });
 
-        setMenuSales(response.data); // Assuming the server returns an array of menu sales data
+        setDailySales(response.data.dailySales);
+        setMonthlySales(response.data.monthSales);
+        setYearlySales(response.data.yearSales);
+        // setMenuSales(response.data); // Assuming the server returns an array of menu sales data
       } catch (error) {
         console.error('Error fetching menu sales:', error);
       }
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    console.log(yearlySales);
 
     if (chartRef.current) {
       chartRef.current.destroy();
@@ -81,16 +71,12 @@ const Sales = () => {
 
     switch (salesType) {
       case 'yearly':
-        data = yearlySales.map(item => item.sales);
-        labels = yearlySales.map(item => item.year.toString());
+        data = yearlySales.map(item => item.sum);
+        labels = yearlySales.map(item => item.date.toString());
         break;
       case 'monthly':
         data = monthlySales;
         labels = Array.from({ length: 12 }, (_, index) => (index + 1).toString());
-        break;
-      case 'weekly':
-        data = weeklySales;
-        labels = Array.from({ length: 4 }, (_, index) => (index + 1).toString());
         break;
       case 'daily':
         data = dailySales;
@@ -120,7 +106,7 @@ const Sales = () => {
     });
 
     chartRef.current = newChart;
-  }, [salesType, weeklySales, monthlySales, yearlySales, dailySales]);
+  }, [salesType, monthlySales, yearlySales, dailySales]);
 
   const handleButtonClick = (type) => {
     setSalesType(type);
@@ -131,17 +117,16 @@ const Sales = () => {
     // 여기에서 선택한 날짜에 따른 메뉴별 수량과 가격을 가져오는 로직을 추가할 수 있습니다.
   };
 
-  const weeklyTotal = weeklySales.reduce((acc, value) => acc + value, 0);
+  const dailyTotal = dailySales.reduce((acc, value) => acc + value, 0);
   return (
     <div className="sales-container">
       <div>
         <button onClick={() => handleButtonClick('yearly')}>연도별 매출</button>
         <button onClick={() => handleButtonClick('monthly')}>월별 매출</button>
-        <button onClick={() => handleButtonClick('weekly')}>주차별 매출</button>
         <button onClick={() => handleButtonClick('daily')}>이번 주 매출</button>
       </div>
       <div>
-        <p>{`${salesType === 'daily' ? '이번 주' : salesType === 'weekly' ? '주차별' : salesType === 'monthly' ? '월별' : '연도별'} 매출 총 합계: ${weeklyTotal}`}</p>
+        <p>{`${salesType === 'daily' ? '이번 주' : salesType === 'monthly' ? '월별' : '연도별'} 매출 총 합계: ${dailyTotal}`}</p>
         <canvas ref={canvasRef} />
       </div>
       <div>
