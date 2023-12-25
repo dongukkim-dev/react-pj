@@ -12,7 +12,6 @@ const ManagerMain = () => {
   const [selectedTab, setSelectedTab] = useState('processing');
   const [currentPage, setCurrentPage] = useState(0);
   const [ordersPerPage] = useState(10);
-  const [perPage] = useState(5); // 페이지당 항목 수
   const [totalData, setTotalData] = useState(100);
 
   //[접수대기, 처리중, 주문 취소, 배달 완료] 4가지 상태 state
@@ -144,21 +143,6 @@ const ManagerMain = () => {
           {selectedTab === 'inProgress' && <InProgressOrders orders={processingOrders} processOrder={processOrder} />}
           {selectedTab === 'cancelled' && <CancelledOrders orders={cancelOrders} />}
           {selectedTab === 'delivered' && <DeliveredOrders orders={compOrders} />}
-
-          <Pagination
-            activePage={currentPage}
-            itemsCountPerPage={perPage}
-            totalItemsCount={totalData}
-            pageRangeDisplayed={5}
-            onChange={handlePageChange}
-            prevPageText="<"
-            nextPageText=">"
-            firstPageText="<<"  // 수정: 첫 페이지로 이동하는 버튼
-            lastPageText=">>"   // 수정: 마지막 페이지로 이동하는 버튼
-            itemClass="page-item"
-            linkClass="page-link"
-            innerClass="pagination"
-          />
         </>
       )}
     </div>

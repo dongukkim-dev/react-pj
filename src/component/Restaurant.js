@@ -68,7 +68,7 @@ const Restaurant = () => {
       });
 
     if (userId !== null) {
-      console.log('실행되는 경우', typeof(userId));
+      console.log('실행되는 경우', typeof (userId));
       axios.get(`/api/bookmark/${id}`, {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -168,6 +168,9 @@ const Restaurant = () => {
     return totalPrice / reviews.length;
   };
 
+  // 아이템이 SOLD 상태인지 확인하는 함수
+  const isMenuSold = (menu) => menu.itemStatus === 'SOLD';
+
   return (
     <div className="Restaurant">
       <img src={`http://localhost:8080/${restaurantInfo.picture}`}
@@ -199,8 +202,8 @@ const Restaurant = () => {
           <h3>메뉴</h3>
           <ul>
             {menuList.map((menu) => (
-              <li key={menu.itemId} onClick={() => handleMenuButtonClick(menu)}>
-                {menu.picture != "" ? (
+              <li key={menu.itemId} onClick={() => !isMenuSold(menu) && handleMenuButtonClick(menu)} className={isMenuSold(menu) ? 'sold' : ''}>
+                {menu.picture !== "" ? (
                   <img src={`http://localhost:8080/${menu.picture}`}
                     alt={menu.itemName}
                     style={{ width: '150px', height: '150px', marginRight: '10px' }}
@@ -212,25 +215,16 @@ const Restaurant = () => {
                     style={{ width: '150px', height: '150px', marginRight: '10px' }}
                   />
                 )}
-                {menu.itemName} - {menu.price}원
+                {menu.itemStatus === 'SOLD' ? (
+                  <span style={{ color: 'red' }}>{menu.itemName} - 재고 소진</span>
+                ) : (
+                  <>
+                    {menu.itemName} - {menu.price}원
+                  </>
+                )}
               </li>
             ))}
           </ul>
-
-          {/* <Pagination
-            activePage={currentPage}
-            itemsCountPerPage={perPage}
-            totalItemsCount={totalData}
-            pageRangeDisplayed={5}
-            onChange={handlePageChange}
-            prevPageText="<"
-            nextPageText=">"
-            firstPageText="<<"  // 수정: 첫 페이지로 이동하는 버튼
-            lastPageText=">>"   // 수정: 마지막 페이지로 이동하는 버튼
-            itemClass="page-item"
-            linkClass="page-link"
-            innerClass="pagination"
-          /> */}
         </div>
       )}
 

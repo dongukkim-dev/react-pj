@@ -68,6 +68,12 @@ const ManagerMypage = () => {
     setModalOpen(false);
   };
 
+  // 가입일자를 원하는 형식으로 포맷팅하는 함수
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    return new Date(dateString).toLocaleDateString('ko-KR', options);
+  };
+
   return (
     <div className="my-page-container">
       <h2>마이페이지</h2>
@@ -91,7 +97,11 @@ const ManagerMypage = () => {
           </tr>
           <tr>
             <td>주소</td>
-            <td>{userInfo.address}</td>
+            <td>{userInfo.address + " " + userInfo.detail}</td>
+          </tr>
+          <tr>
+            <td>가입일</td>
+            <td>{formatDate(userInfo.createdDate)}</td>
           </tr>
         </tbody>
       </table>

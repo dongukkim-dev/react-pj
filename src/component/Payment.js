@@ -77,46 +77,61 @@ const Payment = () => {
   };
 
   const handlePayment = async () => {
-    // 배송지 입력이 필수인 경우, 필수 정보가 누락되었는지 확인
-    if ((!newAddress.address || !newAddress.detail || !newAddress.address.trim() || !newAddress.detail.trim())) {
-      alert('배송지 정보를 모두 입력해주세요.');
-      return;
-    }
+    const confirmWithdrawal = window.confirm('결제를 완료하시겠습니까?');
 
-    try {
-      // 여기서 필요한 주문 정보를 수집합니다.
-      const orderData = {
-        address: isNewAddressClicked ? newAddress.address : userAddress.address,
-        detail: isNewAddressClicked ? newAddress.detail : userAddress.detail,
-        payment: paymentMethod,
-        comment: request,
-        orderItems: cartItems.map(item => ({
-          itemId: item.item_id,
-          amount: item.amount,
-        })),
-      };
+    if (confirmWithdrawal) {
+      // 배송지 입력이 필수인 경우, 필수 정보가 누락되었는지 확인
+      if (isNewAddressClicked) {
+        if (!newAddress.address || !newAddress.detail) {
+          alert('배송지 정보를 모두 입력해주세요.');
+          return;
+        }
+      }
+      else {
+        if (!userAddress.address || !userAddress.detail) {
+          alert('배송지 정보를 모두 입력해주세요.');
+          return
+        }
+      }
 
-      console.log('orderData = ', orderData);
+      try {
+        // 여기서 필요한 주문 정보를 수집합니다.
+        const orderData = {
+          address: isNewAddressClicked ? newAddress.address : userAddress.address,
+          detail: isNewAddressClicked ? newAddress.detail : userAddress.detail,
+          payment: paymentMethod,
+          comment: request,
+          orderItems: cartItems.map(item => ({
+            itemId: item.item_id,
+            amount: item.amount,
+          })),
+        };
 
-      // 주문 정보를 서버로 전송합니다.
-      const response = await axios.post('/api/orders', orderData, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-          'Content-Type': 'application/json',
-        },
-      });
+        console.log('orderData = ', orderData);
 
-      //주문이 완료되면 localstorage를 비워야함
-      localStorage.removeItem(userId);
+        // 주문 정보를 서버로 전송합니다.
+        const response = await axios.post('/api/orders', orderData, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+          },
+        });
 
-      // 서버로부터 주문 처리 결과를 확인하고 필요한 작업을 수행합니다.
-      console.log('주문 처리 결과:', response.data);
+        if (response.status === 200 || response.status === 201) {
+          //주문이 완료되면 localstorage를 비워야함
+          localStorage.removeItem(userId);
 
-      //마지막으로 결과 페이지로 이동하던가 다른 페이지로 이동시켜야 함
-      navigate('/');
-    } catch (error) {
-      console.error('주문 처리 중 오류 발생:', error);
-      // 오류 처리 로직을 추가하세요.
+          // 서버로부터 주문 처리 결과를 확인하고 필요한 작업을 수행합니다.
+          console.log('주문 처리 결과:', response.data);
+          alert("주문이 완료되었습니다.");
+
+          //마지막으로 결과 페이지로 이동하던가 다른 페이지로 이동시켜야 함
+          navigate('/');
+        }
+      } catch (error) {
+        console.error('주문 처리 중 오류 발생:', error);
+        alert(error.response.data);
+      }
     }
   };
 

@@ -61,7 +61,7 @@ const Sales = () => {
   }, []);
 
   useEffect(() => {
-    console.log(yearlySales);
+    console.log(monthlySales);
 
     if (chartRef.current) {
       chartRef.current.destroy();
@@ -73,9 +73,10 @@ const Sales = () => {
       case 'yearly':
         data = yearlySales.map(item => item.sum);
         labels = yearlySales.map(item => item.date.toString());
+        // labels = [2020, 2021, 2022, 2023];
         break;
       case 'monthly':
-        data = monthlySales;
+        data = monthlySales.map(item => item.sum);
         labels = Array.from({ length: 12 }, (_, index) => (index + 1).toString());
         break;
       case 'daily':
@@ -102,6 +103,20 @@ const Sales = () => {
       },
       options: {
         // 추가적인 차트 옵션 설정 가능
+        scales: {
+          x: {
+            ticks: {
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0,
+              mirror: false,
+              padding: 10,
+              callback: function (value, index, values) {
+                return value; // This ensures that the label value is used as-is without modification
+              },
+            }
+          }
+        }
       },
     });
 

@@ -1,6 +1,49 @@
 .progress-buttons {
-    position: relative;
-    right: 10px; /* 원하는 위치로 조정 */
-    display: flex;
-    gap: 10px;
-  }
+  position: relative;
+  right: 10px; /* 원하는 위치로 조정 */
+  display: flex;
+  gap: 10px;
+} 
+
+.order-detail-modal {
+  width: 500px; /* 원하는 너비로 조절 */
+  height: 300px; /* 원하는 높이로 조절 */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+  display: none; /* 모달 기본적으로 숨김 */
+}
+
+/* 모달이 열렸을 때 보이도록 설정 */
+.order-detail-modal.show {
+  display: block;
+}
+
+.order-detail-modal h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.order-detail-modal span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.order-detail-modal button {
+  align-self: flex-end; /* 모달창의 오른쪽 아래에 정렬 */
+  margin-top: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}

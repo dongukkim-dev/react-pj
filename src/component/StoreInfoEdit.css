@@ -99,7 +99,7 @@
 /* 메뉴 추가 버튼 스타일 */
 .add-menu-link {
   margin-top: 20px;
-  text-align: left; /* 왼쪽 정렬 추가 */
+  text-align: right; /* 왼쪽 정렬 추가 */
 }
 
 .add-menu-link button {

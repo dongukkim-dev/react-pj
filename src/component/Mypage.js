@@ -26,6 +26,8 @@ const MyPage = () => {
   const [reviewOrder, setReviewOrder] = useState(null);
   const [isReviewModalOpen, setReviewModalOpen] = useState(false);
 
+  let totalPrice;
+
   useEffect(() => {
     // 회원 정보 및 주문 내역을 서버에서 가져오는 로직
     axios.get('/api/user', {
@@ -81,7 +83,7 @@ const MyPage = () => {
         },
       });
 
-     
+
 
       setUserInfo(response.data);
       setModalOpen(false); // 업데이트 성공 시 모달 닫기
@@ -94,7 +96,7 @@ const MyPage = () => {
 
   const handleWithdrawal = async () => {
     const confirmWithdrawal = window.confirm('정말로 회원을 탈퇴하시겠습니까?');
-    
+
     if (confirmWithdrawal) {
       try {
         // 회원 탈퇴 로직
@@ -123,7 +125,7 @@ const MyPage = () => {
     setUpdatedUserInfo({ ...userInfo });
     setModalOpen(true);
   };
-  
+
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -131,7 +133,7 @@ const MyPage = () => {
   const submitReview = async (reviewData) => {
 
     console.log('reviewData:', reviewData);
-    
+
     // 리뷰 작성 후 해당 주문의 상태를 업데이트하여 리렌더링
     setOrderHistory(prevOrderHistory => {
       const updatedOrderHistory = prevOrderHistory.map(prevOrder => {
@@ -143,7 +145,7 @@ const MyPage = () => {
             rating: reviewData.rating !== undefined ? reviewData.rating : prevOrder.review.rating,
             // 필요한 다른 업데이트된 필드도 추가
           };
-  
+
           // 업데이트된 필드를 사용하여 리뷰 정보 업데이트
           return {
             ...prevOrder,
@@ -159,7 +161,7 @@ const MyPage = () => {
       return updatedOrderHistory;
     });
   };
-  
+
   const closeOrderHistoryModal = () => {
     setSelectedOrder(null);
     setOrderHistoryModalOpen(false);
@@ -196,7 +198,7 @@ const MyPage = () => {
               const updatedReview = prevOrder.review
                 ? { ...prevOrder.review, id: null, content: null, rating: null }
                 : null;
-        
+
               return {
                 ...prevOrder,
                 review: updatedReview,
@@ -218,10 +220,9 @@ const MyPage = () => {
     return new Date(dateString).toLocaleDateString('ko-KR', options);
   };
 
-
   return (
     <div className="my-page-container">
-       <h2>마이페이지</h2>
+      <h2>마이페이지</h2>
       <div className="tab-navigation">
         <button
           onClick={() => setActiveTab('orderHistory')}
@@ -248,7 +249,7 @@ const MyPage = () => {
           {orderHistory.length > 0 ? (
             <div>
               <ul>
-                {orderHistory.map((order) => (
+                {orderHistory.map((order, index) => (
                   <div key={order.orderId}>
                     <p>주문한 가게: {order.review ? order.review.storeName : '가게 정보 없음'}</p>
                     <p>주문일자: {formatDate(order.orderDate)}</p>
@@ -258,15 +259,19 @@ const MyPage = () => {
                           {item.itemName} 수량: {item.count}  가격: {item.orderPrice}원
                         </li>
                       ))}
+                      <p>총액: {totalPrice = order.orderItems.reduce((total, item) => total + item.orderPrice * item.count, 0)}</p>
                     </ul>
-                    {order.review && order.review.id != null ? (
+                    {order.orderStatus === 'COMP' && order.review && order.review.id !== null ? (
                       <div className='button-container'>
                         <button onClick={() => openReviewModal(order)}>리뷰 수정</button>
                         <button onClick={() => confirmReviewDeletion(order)}>리뷰 삭제</button>
                       </div>
-                    ) : (
+                    ) : order.orderStatus === 'COMP' ? (
                       <button onClick={() => openReviewModal(order)}>리뷰 쓰기</button>
-                    )}
+                    ) : null}
+
+                    {/* 각 주문 사이에 구분 줄 추가 */}
+                    {index < orderHistory.length - 1 && <hr />}
                   </div>
                 ))}
               </ul>
@@ -279,7 +284,7 @@ const MyPage = () => {
 
       {activeTab === 'userInfo' && (
         <>
-         <h3>회원 정보</h3>
+          <h3>회원 정보</h3>
           <table>
             <tbody>
               <tr>
@@ -313,9 +318,9 @@ const MyPage = () => {
             </tbody>
           </table>
           <div className="button-container">
-      <button onClick={openModal}>회원정보 수정</button>
-      <button onClick={handleWithdrawal}>회원탈퇴</button>
-    </div>
+            <button onClick={openModal}>회원정보 수정</button>
+            <button onClick={handleWithdrawal}>회원탈퇴</button>
+          </div>
         </>
       )}
 

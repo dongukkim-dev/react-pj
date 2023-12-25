@@ -71,38 +71,6 @@ const Navbar = ({ handleSearchChange, fetchRestaurants }) => {
       </div>
     </header>
   );
-
-  // return (
-  //   <header>
-  //     <div className="header-left">
-  //       {/* "배달및 주문서비스"를 클릭 가능한 링크로 만듭니다. */}
-  //       <Link to="/" className="nav-link">
-  //         <FontAwesomeIcon icon={faMotorcycle} size="2x"/> {/* 크기 지정 (2배) */}
-  //         <div className='header-title'>배달 및 주문서비스</div>
-  //       </Link>
-  //     </div>
-  //     <div className="header-right">
-  //       <Link to="/mypage" className="nav-link" onClick={() => handleLinkClick()}>
-  //         마이페이지
-  //       </Link>
-  //       <Link to="/wishlist" className="nav-link">
-  //         찜목록
-  //       </Link>
-  //       <Link to="/cart" className="nav-link">
-  //         장바구니
-  //       </Link>
-  //       {isLoggedIn ? (
-  //         <Link to="/login" className="nav-link" onClick={handleLogout}>
-  //           로그아웃
-  //         </Link>
-  //       ) : (
-  //         <Link to="/login" className="nav-link">
-  //           로그인
-  //         </Link>
-  //       )}
-  //     </div>
-  //   </header>
-  // );
 };
 
 export default Navbar;

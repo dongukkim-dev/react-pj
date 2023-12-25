@@ -20,37 +20,43 @@ const MenuDetail = ({ selectedItem, onClose, setItemInfo }) => {
     setEditModalOpen(true);
   };
 
-  const closeEditModal = (picture) => {
-    onClose(picture); // 이미지 URL 전달
+  const closeEditModal = () => {
+    setFile(null);
     setEditModalOpen(false);
   };
 
   const handleUpdate = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('file', file); // 'file'은 서버에서 요청을 처리하는 데 사용된 매개변수 이름입니다.
-      formData.append('item', new Blob([JSON.stringify(editedProductInfo)], {
-        type: "application/json"
-      }));
 
-      console.log('editInfo:', editedProductInfo);
+    const confirmWithdrawal = window.confirm('메뉴를 수정하시겠습니까?');
 
-      const id = editedProductInfo.itemId;
-      const response = await axios.put(`/api/items/${id}`, formData, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+    if (confirmWithdrawal) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file); // 'file'은 서버에서 요청을 처리하는 데 사용된 매개변수 이름입니다.
+        formData.append('item', new Blob([JSON.stringify(editedProductInfo)], {
+          type: "application/json"
+        }));
 
-      // 응답을 처리하거나 필요한 경우 추가적인 로직을 수행합니다.
-      console.log('상품이 성공적으로 업데이트되었습니다:', response.data);
+        const id = editedProductInfo.itemId;
+        const response = await axios.put(`/api/items/${id}`, formData, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'multipart/form-data',
+          },
+        });
 
-      // 수정 모달 닫기
-      closeEditModal(response.data.picture);
-    } catch (error) {
-      console.error('상품 업데이트 실패:', error);
-      // 오류를 적절하게 처리합니다.
+        // 응답을 처리하거나 필요한 경우 추가적인 로직을 수행합니다.
+        console.log('상품이 성공적으로 업데이트되었습니다:', response.data);
+        alert('상품이 성공적으로 업데이트되었습니다');
+
+        // 수정 모달 닫기
+        closeEditModal();
+        onClose(response.data);
+      } catch (error) {
+        console.error('상품 업데이트 실패:', error);
+        // 오류를 적절하게 처리합니다.
+        alert('상품 업데이트 실패');
+      }
     }
   };
 
@@ -80,6 +86,7 @@ const MenuDetail = ({ selectedItem, onClose, setItemInfo }) => {
         closeEditModal();
       } catch (error) {
         console.error('상품 삭제 실패:', error);
+        alert('상품 삭제에 실패했습니다.');
       }
     }
   };
@@ -91,10 +98,10 @@ const MenuDetail = ({ selectedItem, onClose, setItemInfo }) => {
       {/* 상품에 대한 정보 */}
       <div>
         <h3>상품 정보</h3>
-        <p>가격: {editedProductInfo.price}원</p>
-        <img src={file ? URL.createObjectURL(file) : `http://localhost:8080/${editedProductInfo.picture}`} alt={editedProductInfo.name} />
+        <p>가격: {selectedItem.price}원</p>
+        <img src={`http://localhost:8080/${selectedItem.picture}`} alt={selectedItem.name} />
         <p>상세 정보: {editedProductInfo.content}</p>
-        <p>판매상태: {editedProductInfo.itemStatus === 'SALE' ? '판매중' : '품절'}</p> {/* 추가: 품절 여부 표시 */}
+        <p>판매상태: {editedProductInfo.itemStatus === 'SALE' ? '판매중' : '재고소진'}</p> {/* 추가: 품절 여부 표시 */}
       </div>
 
       {/* 수정 버튼 */}
@@ -138,10 +145,18 @@ const MenuDetail = ({ selectedItem, onClose, setItemInfo }) => {
               <input
                 type="file"
                 id="editedRepresentativeImage"
+                // value={editedProductInfo.picture}
                 onChange={handleImageUpload}
               />
             </div>
-
+            <div>
+              <label htmlFor="menuImage">사진 미리보기 </label>
+              <img
+                src={file ? URL.createObjectURL(file) : null}
+                alt="대표 사진 미리보기"
+                style={{ width: '300px', height: '200px' }}
+              />
+            </div>
             <div>
               <label htmlFor="editedDescription"> 상세 정보</label>
               <textarea
@@ -165,7 +180,7 @@ const MenuDetail = ({ selectedItem, onClose, setItemInfo }) => {
                 }
               >
                 <option value='SALE'>판매중</option>
-                <option value='SOLD'>품절</option>
+                <option value='SOLD'>재고소진</option>
               </select>
             </div>
             <div>
